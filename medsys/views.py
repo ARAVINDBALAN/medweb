@@ -69,51 +69,50 @@ import datetime
 
 
 def pushdata(request):
-    if request.method == 'POST':
-        key = request.POST.get('key')
-        print(key)
-        if request.POST.get('mor1')=="morning":
-            mor1=1
-        else:
-           mor1=0
-        if request.POST.get('mor2')=="morning":
-            mor2=1
-        else:
-            mor2=0
-        if request.POST.get('noon1')=="noon":
-            noon1=1
-        else:
-            noon1=0
-        if request.POST.get('noon2')=="noon":
-            noon2=1
-        else:
-            noon2=0
-        if request.POST.get('eve1')=="evening":
-            eve1=1
-        else:
-            eve1=0
-        if request.POST.get('night1')=="night":
-            night1=1
-        else:
-            night1=0
-        if request.POST.get('eve1')=="evening":
-            eve2=1
-        else:
-            eve2=0
-        if request.POST.get('night2')=="night":
-            night2=1
-        else:
-            night2=0
+    # key = request.POST.get('key')
+    # print(key)
+    #     # if request.POST.get('mor1')=="morning":
+        #     mor1=1
+        # else:
+        #    mor1=0
+        # if request.POST.get('mor2')=="morning":
+        #     mor2=1
+        # else:
+        #     mor2=0
+        # if request.POST.get('noon1')=="noon":
+        #     noon1=1
+        # else:
+        #     noon1=0
+        # if request.POST.get('noon2')=="noon":
+        #     noon2=1
+        # else:
+        #     noon2=0
+        # if request.POST.get('eve1')=="evening":
+        #     eve1=1
+        # else:
+        #     eve1=0
+        # if request.POST.get('night1')=="night":
+        #     night1=1
+        # else:
+        #     night1=0
+        # if request.POST.get('eve1')=="evening":
+        #     eve2=1
+        # else:
+        #     eve2=0
+        # if request.POST.get('night2')=="night":
+        #     night2=1
+        # else:
+        #     night2=0
           
+        #   'disease':request.POST.get('disease'),
           
-        db.collection("patients").document(key).collection("medical_history").add({
-          'date':datetime.datetime.now(),
-          'disease':request.POST.get('disease'),
-          'docId':"id0004",
-          'docName':"Susan"
-        })
+        # db.collection("patients").document(key).collection("medical_history").add({
+        #   'date':datetime.datetime.now(),
+        #   'docId':"id0004",
+        #   'docName':"Susan"
+        # })
         
-    return render(request,'index.html',{'key':key})
+    return render(request,'auth.html')
 
     
 

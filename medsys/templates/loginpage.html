@@ -73,7 +73,8 @@ body {
     </head>
     <body>
         <div class="wrapper">
-            <form class="form-signin">       
+            <form class="form-signin" method="POST">
+              {% csrf_token %}       
               <h2 class="form-signin-heading" style="opacity:.5";>Please login</h2>
               <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="" autofocus="" />
               <input type="text" class="form-control" id="uid" name="uid" placeholder="Uid" required=""/> 

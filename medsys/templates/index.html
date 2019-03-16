@@ -7,44 +7,65 @@
 </title>
 <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-firestore.js"></script>
+ <!-- Icons font CSS-->
+ <!-- <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all"> -->
+ <!-- <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all"> -->
+ <!-- Font special for pages-->
+ <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
 
+ <!-- Vendor CSS-->
+ <!-- <link href="vendor/select2/select3.min.css" rel="stylesheet" media="all"> -->
+ <!-- <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
 
+         <!-- Jquery JS-->
+         <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+         <!-- Vendor JS-->
+         <!-- <script src="vendor/select2/select3.min.js"></script> -->
+         <!-- <script src="vendor/datepicker/moment.min.js"></script> -->
+         <!-- <script src="vendor/datepicker/daterangepicker.js"></script> -->
+     
+         <!-- Main JS-->
+         <!-- <script src="js/global.js"></script> -->
 
-      <link rel="stylesheet" href="css/style.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <!-- <link rel="stylesheet" type="text/css" href="css/mainlogin.css"> -->
+  
+  
+      <link rel="stylesheet" href="/static/css/style.css">
 
       <style>
           * {
             box-sizing: border-box;
           }
-
+          
           body {
-            font: 16px Arial;
+            font: 16px Arial;  
           }
-
+          
           /*the container must be positioned relative:*/
           .autocomplete {
             position: relative;
             display: inline-block;
           }
-
+          
           input {
             border: 1px solid transparent;
             background-color: #f1f1f1;
             padding: 10px;
             font-size: 16px;
           }
-
+          
           input[type=text] {
             background-color: #f1f1f1;
             width: 100%;
           }
-
+          
           input[type=submit] {
-            background-color: DodgerBlue;
+            background-color: rgb(99, 5, 5);
             color: #fff;
             cursor: pointer;
           }
-
+          
           .autocomplete-items {
             position: absolute;
             border: 1px solid #d4d4d4;
@@ -56,170 +77,145 @@
             left: 0;
             right: 0;
           }
-
+          
           .autocomplete-items div {
             padding: 10px;
             cursor: pointer;
-            background-color: #fff;
-            border-bottom: 1px solid #d4d4d4;
+            background-color: #fff; 
+            border-bottom: 1px solid #d4d4d4; 
+            color: #000;
           }
-
+          
           /*when hovering an item:*/
           .autocomplete-items div:hover {
-            background-color: #e9e9e9;
+            background-color: #e9e9e9; 
           }
-
+          
           /*when navigating through the items using the arrow keys:*/
           .autocomplete-active {
-            background-color: DodgerBlue !important;
-            color: #ffffff;
+            background-color: DodgerBlue !important; 
+            color: #ffffff; 
           }
           table, th, td {
             border: 1px solid black;
-
+            
           }
-          </style>
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCOXeSV_ZNzucZxyc7I1qTAe17751AsE2I",
-        authDomain: "medsys-fd4a6.firebaseapp.com",
-        databaseURL: "https://medsys-fd4a6.firebaseio.com",
-        projectId: "medsys-fd4a6",
-        storageBucket: "medsys-fd4a6.appspot.com",
-        messagingSenderId: "629066624752"
-    };
-
-
-    // var app = firebase.initializeApp(config);
-    // var db = firebase.firestore(app);
-    firebase.initializeApp(config);
-    var uid='VAFKpny35sqpiwNboekD';
-    var db = firebase.firestore();
-    var docRef = db.collection("patients").doc(uid);
-
-    docRef.get().then(function(doc) {
-        if (doc.exists) {
-            var name= doc.data().name;
-            var dob= Date(doc.data().dob);
-            console.log(dob);
-
-            console.log(dob.toString().split(" "));
-            var d = dob.toString().split(" ");
-            var f = d[0]+" "+d[1]+" "+d[2]+" "+d[3];
-
-            var height= doc.data().height;
-            var weight= doc.data().weight;
-            document.getElementById('name').innerHTML=name;
-            document.getElementById('age').innerHTML=f;
-            document.getElementById('height').innerHTML=height;
-            document.getElementById('weight').innerHTML=weight;
-            console.log(JSON.stringify(doc.data()));
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
-
-
-    var docRef1 = db.collection("patients").doc(uid).collection("medical_history");
-
-    docRef1.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        var disease= doc.data().disease;
-            var date= Date(doc.data().date);
-            var date1  = date.toString().split(" ");
-            var d = date1[0]+" "+date1[1]+" "+date1[2]+" "+date1[3];
-            var docname= doc.data().docName;
-            var severity= doc.data().severity;
-            console.log(disease);
-            console.log(date);
-            window.medicine="";
-            var docRef2 = db.collection("patients").doc(uid).collection("medical_history").doc(doc.id).collection("medicine");
-
-docRef2.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc1) => {
-        //    console.log(doc1.data());
-           window.medicine += doc1.data().name+"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-           console.log(window.medicine);
-
-        });
-        var table = document.getElementById("prevdetail");
-
-var row = table.insertRow(-1);
-var cell1 = row.insertCell(0);
-console.log(window.medicine);
-cell1.innerHTML = "Disease :"+disease+"<br>Date :"+d+"<br>Doctor :"+docname+"<br>Severity :"+severity+"<br>Medicines:"+window.medicine;
-      window.medicine="";
-    });
-
-
-
-
-
-});  });
-    </script>
+          </style>       
 </head>
 
-<body>
-
+<body style="background-image: url('/static/images/bg01.jpeg')">
+    <!-- <img src="images/bg01.jpeg" alt="IMG"> -->
   <div class="header">
-  <h1>View My Details</h1>
+  <!-- <h1>View My Details</h1> -->
+ <h1> <label id="head"></label></h1>
 </div>
 
-<div class="page-wrapper">
-  <div class="main-content">
+<div class="page-wrapper" >
+  <div class="main-content" style="background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('/static/images/setman.jpg');  background-size: cover;
+  width: 165vh;
+ ">
       <!-- <div> -->
-          <form autocomplete="off" method="POST">
-            {% csrf_token %}
-          Name:
-          <label id="name"></label><br>
-          DOB:
-          <label id="age"></label><br>
-          Height:
-          <label id="height"></label><br>
-          Weight:
+          <form autocomplete="off" method="GET">
+          <!-- Name:
+          <label id="name"></label><br> -->
+          {% csrf_token %}
+          &nbsp;&nbsp;&nbsp;DOB&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
+          <label id="dob"></label><br><br>
+          &nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
+          <label id="age"></label><br><br>
+          &nbsp;&nbsp;&nbsp;Height&nbsp;&nbsp;:&nbsp;&nbsp;
+          <label id="height"></label><br><br>
+          &nbsp;&nbsp; Weight&nbsp;:&nbsp;&nbsp;
           <label id="weight"></label><br>
 
 
 
-
+         
            <div class="autocomplete" >
+             <br>
              <input id="myInput" type="text" name="myCountry" placeholder="Disease">
+             <input id="myInpussst" type="text" name="key" placeholder="Disease" hidden value="{{key}}">
          </div>
            <br><br>
-           <div class="autocomplete" width="30px">
-           <textarea id="desc" cols="25" rows="4" placeholder="Description"></textarea><br><br>
-           <input type="text" id="med1" placeholder="Medicine 1" name="med1" style="width:300px;"> <input type="checkbox" id="mor" name="medtime1">Morning
-           <input type="checkbox" id="noon" name="medtime1">Noon
-           <input type="checkbox" id="evening" name="medtime1" >Evening
-           <input type="checkbox" id="night" name="medtime1">Night
 
+           <div class="autocomplete" width="30px">
+    
+            <input type="text" id="sever" name="sever" placeholder="Severity" style="width:300px;"/><br><br>
+            
+            <textarea id="desc" col1s="40" rows="6" placeholder="Description"></textarea><br><br>
+           <input type="text" id="med1" placeholder="Medicine 1" name="med1" style="width:300px;"> <input type="checkbox" class="medtime1" id="mor" name="medtime1" value="morning">Morning
+           <input type="checkbox" id="noon" class="medtime1"  name="medtime1" value="noon">Noon
+           <input type="checkbox" id="evening" class="medtime1"  name="medtime1" value="evening">Evening
+           <input type="checkbox" id="night" class="medtime1"  name="medtime1" value="night">Night
+          
           <br><br>
 
-
+           
            <input type="text" id="med2" placeholder="Medicine 2" name="med2" style="width:300px;">
-           <input type="checkbox" id="mor" name="medtime2">Morning
-           <input type="checkbox" id="noon" name="medtime2">Noon
-           <input type="checkbox" id="evening" name="medtime2">Evening
-           <input type="checkbox" id="night" name="medtime2">Night
+           <input type="checkbox" id="mor"class="medtime2" name="medtime2" value="morning">Morning
+           <input type="checkbox" id="noon" class="medtime2"name="medtime2"value="noon"> Noon
+           <input type="checkbox" id="evening" class="medtime2"name="medtime2" value="evening">Evening
+           <input type="checkbox" id="night" class="medtime2"name="medtime2" value="night">Night
+<br><br>
+           <!-- <input type="text" id="med3" placeholder="Medicine 3" name="med3" style="width:300px;">
+           <input type="checkbox" id="mor"class="medtime3" name="medtime3" value="morning">Morning
+           <input type="checkbox" id="noon" class="medtime3"name="medtime3"value="noon"> Noon
+           <input type="checkbox" id="evening" class="medtime3"name="medtime3" value="evening">Evening
+           <input type="checkbox" id="night" class="medtime3"name="medtime3" value="night">Night -->
 
-            <br>
-            <input type="submit"></div>
-
+            <br><br><br>
+            <input type="submit"  id="button5"/>
+           
           </form>
       </div>
-  <div class="side-bar">
-      <table name="prevdetail" id="prevdetail" cellspacing="0"><tr><th>Previous List</th></tr>
-        <tr>
+          <!-- Jquery JS-->
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <!-- Vendor JS-->
+    <!-- <script src="vendor/select2/select3.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script> -->
 
+    <!-- Main JS-->
+    <!-- <script src="js/global.js"></script> -->
+
+      <!-- <script>		
+          $(document).ready(function(){
+          $("#button5").click(function(){
+                alert("hi");
+                var diseas=$("#myInput").val();
+                  var desc=$("#desc").val();
+                  db.collection("patient").doc(uid).collection("medical_history").add({
+      disease: diseas,
+     
+      description: desc
+  }) .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+                  alert(diseas+desc);
+                      });
+                    });
+                </script>         -->
+  <div class="side-bar" style="overflow: auto">
+      <table name="prevdetail" id="prevdetail" cellspacing="0"><tr><th ><br>Previous List<br><br></th></tr>
+        <tr>
+            
+            <tbody>
+
+            </tbody>
+        </tr></table>
+      <br>
+      <table name="allergy" id="allergy" cellspacing="0"><tr><th>Allergy To</th></tr>
+        
+        <tr>
+            
             <tbody>
 
             </tbody>
         </tr></table></div>
-
+  
 </div>
   </form>
 <script>
@@ -319,7 +315,7 @@ cell1.innerHTML = "Disease :"+disease+"<br>Date :"+d+"<br>Doctor :"+docname+"<br
           closeAllLists(e.target);
       });
     }
-
+    
     /*An array containing all the country names in the world:*/
     var  countries= ["Abdominal aortic aneurysm","Acne","Acute cholecystitis","Acute lymphoblastic leukaemia","Acute lymphoblastic leukaemia: Children","Acute pancreatitis","Alcohol-related liver disease","Allergic rhinitis","Alzheimer","Anal cancer","Anaphylaxis","Angioedema","Ankylosing spondylitis","Anorexia nervosa","Asbestosis","Asthma","Atopic eczema","Bacterial vaginosis","Bipolar disorder","Bone cancer","Bowel polyps","Brain stem death","Brain tumours","Bronchiectasis","Bronchitis","Bulimia","Bunion","Bursitis","Catarrh","Cellulitis","Cervical cancer","Chest infection","Chickenpox","Chilblains","Chronic fatigue syndrome","Chronic kidney disease","Chronic lymphocytic leukaemia","Chronic pancreatitis","Cirrhosis","Clostridium difficile","Coeliac disease","Cold sore","Coma","Common cold","Common heart conditions","Congenital heart disease","Conjunctivitis","Constipation","Costochondritis","Cough","Croup","Cystic fibrosis","Cystitis","Deafblindness","Deep vein thrombosis","Dehydration","Dementia","Dementia with Lewy bodies","Dental abscess","Depression","Dermatitis herpetiformis","Diabetes","Diabetic retinopathy","Diarrhoea","Discoid eczema","Dizziness (Lightheadedness)","Dry mouth","Dystonia","Earache","Earwax build-up","Ebola virus disease","Ectopic pregnancy","Endometriosis","Epilepsy","Erectile dysfunction (impotence)","Ewing sarcoma","Febrile seizures","Fever in children","Fibroids","Fibromyalgia","Flatulence","Flu","Foetal alcohol syndrome","Food poisoning","Fungal nail infection","Indigestion","Ingrown toenail","Insomnia","Irritable hip","Itching","Itchy bottom","Kidney cancer","Kidney infection","Kidney stones","Leg cramps","Lichen planus","Liver cancer","Liver disease","Liver tumours"];
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
@@ -327,5 +323,302 @@ cell1.innerHTML = "Disease :"+disease+"<br>Date :"+d+"<br>Doctor :"+docname+"<br
     </script>
 
 </body>
+
+
+
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCOXeSV_ZNzucZxyc7I1qTAe17751AsE2I",
+        authDomain: "medsys-fd4a6.firebaseapp.com",
+        databaseURL: "https://medsys-fd4a6.firebaseio.com",
+        projectId: "medsys-fd4a6",
+        storageBucket: "medsys-fd4a6.appspot.com",
+        messagingSenderId: "629066624752"
+    };
+    
+
+    // var app = firebase.initializeApp(config);
+    // var db = firebase.firestore(app);
+    firebase.initializeApp(config);
+    var uid="{{key}}";
+    var db = firebase.firestore();
+    var docRef = db.collection("patients").doc(uid);
+
+    docRef.get().then(function(doc) {
+        if (doc.exists) {
+            var name= doc.data().name;
+            var dob= doc.data().dob;
+            // var seconds = new Date().getTime() / 1000;
+            var bdate=dob.toDate();
+            // var dateTimeString = moment(dob).format("DD-MM-YYYY ");
+            // alert(dateTimeString);
+            var height= doc.data().height;
+            var weight= doc.data().weight;
+            // console.log(bdate.toString().split(" "));
+            var d = bdate.toString().split(" ");
+            var f = d[0]+" "+d[1]+" "+d[2]+" "+d[3];
+
+            function calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+myage=calculate_age(new Date(f));
+            document.getElementById('head').innerHTML=name;
+            document.getElementById('age').innerHTML=myage;
+            document.getElementById('dob').innerHTML=f;
+            document.getElementById('height').innerHTML=height;
+            document.getElementById('weight').innerHTML=weight;
+            // console.log(JSON.stringify(doc.data()));
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+
+
+    var docRef1 = db.collection("patients").doc(uid).collection("medical_history");
+
+    docRef1.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+    //  var disease=null;
+    //  var f =null ;
+    //  var docname=null;
+    //  var severity=null;
+    //  console.log(typeof(doc.data()));
+    data = doc.data()
+    var medic=data['medicine'];
+    // console.log(medic.length);
+    var disease = data.disease
+    var severity = data.severity
+    var doc=data.docName;
+    // console.log(date)
+    // console.log(severity)
+    // console.log(medic[0].name+"=>",medic[1].name)
+        //  disease= doc.data().disease;
+            var date= data.date;
+            // console.log(date);
+            // var date=dat.toDate();
+            // var date2=dat.toDate();
+            // console.log(moment.tz(date,'America/New_York').toDate())
+            // var date=date.toDate();
+            date = new Date(date ),
+datevalues = [
+   date.getFullYear(),
+   date.getMonth()+1,
+   date.getDate(),
+   date.getHours(),
+   date.getMinutes(),
+   date.getSeconds(),
+];
+// console.log(datevalues); 
+            // var date=date1
+            var d = date.toString().split(" ");
+             f =d[1]+" "+d[2]+" "+d[3]+" "+d[4]+"  "+d[5]+" "+d[6]+" "+d[8];
+          //   console.log("ehllo");
+          //    docname= doc.data().docName;
+          //    severity= doc.data().severity;
+          //   //  medic=doc.data().medicine;
+          //   //  console.log(data);
+          //  var  medicine="hai";
+          //   // var docRef2 = db.collection("patients").doc(uid).collection("medical_history").doc(doc.id).collection("medicine");
+
+            //   docRef2.get().then((querySnapshot) => {
+            //    querySnapshot.forEach((doc1) => {
+        //    console.log(doc1.data());
+        // var i;
+        // for( i=0;i<=medic.length;i++){
+        //     // {console.log(medic[i].name);
+        //       // window.medicine += doc1.data().name+"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        //       medicine += medic[i].name;
+        //       console.log(medic[i].name);
+        //     }
+        //    console.log(medicine);
+           
+        //     //  // }); 
+        //       var table = document.getElementById("prevdetail");
+
+        //       var row = table.insertRow(-1);
+        //       var cell1 = row.insertCell(0);
+        //     //   // console.log(window.medicine);
+        //       cell1.innerHTML = "&nbsp;Disease :"+disease+"<br>&nbsp;Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;"+f+"&nbsp;&nbsp;&nbsp;<br>&nbsp;Doctor &nbsp;&nbsp;&nbsp;:"+docname+"<br>&nbsp;Severity&nbsp;&nbsp; :"+severity+"<br>&nbsp;Medicines:"+window.medicine;
+               medicine="";
+             var i;
+             for(i=0;i<medic.length;i++){
+               medicine+=medic[i].name+"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+              //  console.log(medic[0].name+"=>",medic[1].name)
+             }
+            //  console.log(medicine);
+             var table=document.getElementById("prevdetail");
+             var row=table.insertRow(-1);
+             var cell1=row.insertCell(0);
+             cell1.innerHTML= "&nbsp;Disease :"+disease+"<br>&nbsp;Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;"+f+"&nbsp;&nbsp;&nbsp;<br>&nbsp;Doctor &nbsp;&nbsp;&nbsp;:"+doc+"<br>&nbsp;Severity&nbsp;&nbsp; :"+severity+"<br>&nbsp;Medicines:"+medicine;
+       
+           
+
+
+      
+   
+          });});
+
+window.allergy="";
+            var docRef3 = db.collection("patients").doc(uid).collection("allergic_to");
+
+              docRef3.get().then((querySnapshot) => {
+               querySnapshot.forEach((doc2) => {
+        //    console.log(doc1.data());
+              window.allergy += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+doc2.data().name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
+          //  console.log(window.medicine);
+           
+              }); 
+              var table = document.getElementById("allergy");
+
+              var row = table.insertRow(-1);
+              var cell1 = row.insertCell(0);
+              // console.log(window.medicine);
+              cell1.innerHTML = window.allergy;
+               window.medicine="";
+              });
+// db.collection("patients").doc("VAFKpny35sqpiwNboekD").collection("medical_history").add({
+//                     disease: "diseas",
+     
+//                     description: "desc"
+//                 }) .then(function(docRef) {
+//                   console.log("Document written with ID: ", docRef.id);
+//                 alert("success");
+//              })
+//               .catch(function(error) {
+//               alert("fasuccess");
+//                console.error("Error adding document: ", error);
+//             });
+// psuhing firebase
+
+$(document).ready(function(){
+          $("#button5").click(function(){
+                // alert("hi");
+                var diseas=$("#myInput").val();
+                  var desc=$("#desc").val();
+                  
+var checkedValue1 = [];
+var j=0; 
+var inputElements = document.getElementsByClassName('medtime1');
+for(var i=0; inputElements[i]; i++){
+      if(inputElements[i].checked){
+           checkedValue1[j] = inputElements[i].value;
+           j++;
+           
+          // break;
+      }
+}
+alert(checkedValue1)
+var morning1=0;
+var noon1=0;
+var evening1=0;
+var night1=0;
+var i=0;
+// alert(morning1+" "+noon1+" "+evening1+" "+night1);
+for( i=0;i<checkedValue1.length;i++){alert(morning1+" "+noon1+" "+evening1+" "+night1);
+  if (chechedValue[i]=="morning")
+  {
+       morning1=1;
+  }
+  else if(checkedValue1[i]=="noon")
+  {
+    noon1=1;}
+  else if(checkedValue1[i]=="evening"){
+    evening1=1;}
+  else if(checkedValue1[i]=="night"){
+    night1=1;}
+    else{ var j=0}
+}alert(morning1+" "+noon1+" "+evening1+" "+night1);
+
+var med1=$("#med1").val();
+var med2=$("#med2").val();
+// var med3=$("#med3").val();
+var sever=$("#sever").val();
+// var checkedValue3 = [];
+// var j=0; 
+// var inputElements = document.getElementsByClassName('medtime3');
+// for(var i=0; inputElements[i]; i++){
+//       if(inputElements[i].checked){
+//            checkedValue3[j] = inputElements[i].value;
+//            j++;
+           
+//           // break;
+//       }
+// }
+// alert(checkedValue3);
+
+// alert(med1+med2);
+var checkedValue2 = [];
+var j=0; 
+var inputElements = document.getElementsByClassName('medtime2');
+for(var i=0; inputElements[i]; i++){
+      if(inputElements[i].checked){
+           checkedValue2[j] = inputElements[i].value;
+           j++;
+           
+          // break;
+      }
+}
+// alert(checkedValue2);
+
+      // call_push(diseas,desc);
+
+          //  alert(diseas+desc);
+      
+        // alert(med1+med2);
+                    $.post( "https://us-central1-medsys-fd4a6.cloudfunctions.net/auth/addmedicine/",{
+                      uid:uid,
+                      disease:diseas,
+                      docId:"d909",
+                      docName:"Rahul C",
+                      severity:sever,
+                      
+                      medicine:[
+                        {
+                          name:med1,
+                          schedule:checkedValue1
+                        },
+                        {
+                          name:med2,
+                          schedule:checkedValue2
+                        }
+                      ]
+                    },function() {
+  alert("success");
+    // window.location.href="dlogin.html";
+    // window.onload = function() { }
+ 
+});alert("Loading......");
+
+});
+                    });
+
+            //         function call_push(disease,desc)
+            //         {
+
+                      
+            //       var db = firebase.firestore();
+            //       db.collection("patients").doc("VAFKpny35sqpiwNboekD").collection("medical_history").add({
+                    
+            //         disease: diseas,
+     
+            //         description: desc
+            //     }) .then(function(docRef) {
+            //       console.log("Document written with ID: ", docRef.id);
+            //     alert("success");
+            //  })
+            //   .catch(function(error) {
+            //   alert("fasuccess");
+            //    console.error("Error adding document: ", error);
+            // });
+            //         }
+    </script>
+
 
 </html>
