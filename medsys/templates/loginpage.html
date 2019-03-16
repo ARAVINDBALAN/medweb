@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+      </head>
+       
+       <style>
+            @import "bourbon";
+
+body {
+	background: rgb(177, 98, 98) !important;	
+}
+
+.wrapper {	
+	margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.form-signin {
+  max-width: 500px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+}
+  .form-signin-heading,
+	.checkbox {
+	  margin-bottom: 30px;
+	}
+
+	.checkbox {
+	  font-weight: normal;
+	}
+
+	.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+		@include box-sizing(border-box);
+
+		&:focus {
+		  z-index: 2;
+		}
+	}
+
+	input[type="text"] {
+	  margin-bottom: 5px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+    input[type="date"] {
+	  margin-bottom: 5px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+
+
+	input[type="password"] {
+	  margin-bottom: 5px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
+    .textareaad{
+        border-radius: 10px;
+    }
+    
+
+        </style>
+        
+    </head>
+    <body>
+        <div class="wrapper">
+            <form class="form-signin">       
+              <h2 class="form-signin-heading" style="opacity:.5";>Please login</h2>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="" autofocus="" />
+              <input type="text" class="form-control" id="uid" name="uid" placeholder="Uid" required=""/> 
+              <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required=""/>
+              <input type="text" class="form-control" id="Adhaar" name="Adhaar" placeholder="Adhaar" required=""/>
+              <div class="form_control" style="opacity:.5"; >Gender</div>
+              <div class="form-check-inline" style="opacity:.5";>
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="sex" value="female">Female
+                    </label>
+                  </div>
+                  <div class="form-check-inline" style="opacity:.5";>
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="sex" value="male">Male
+                    </label>
+                  </div>
+                  <div class="form-check-inline" style="opacity:.5";>
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="sex" value="trans">Trans
+                    </label>
+
+                  </div>
+                  <br>
+                  
+                  <div class="form_control" style="opacity:.5";>DOB<br><input type="date" name="dob" id="dob"></div>
+                  <div style="opacity: .5">Address</div>
+                  <div class="form_control"><textarea id="address" cols="40" rows="10" class="textareaad" name="address"></textarea></div>      
+
+                
+
+                        
+              <label class="checkbox">
+                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+              </label>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
+            </form>
+          </div>
+          <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCOXeSV_ZNzucZxyc7I1qTAe17751AsE2I",
+                authDomain: "medsys-fd4a6.firebaseapp.com",
+                databaseURL: "https://medsys-fd4a6.firebaseio.com",
+                projectId: "medsys-fd4a6",
+                storageBucket: "medsys-fd4a6.appspot.com",
+                messagingSenderId: "629066624752"
+            };
+        
+        
+            // var app = firebase.initializeApp(config);
+            // var db = firebase.firestore(app);
+            firebase.initializeApp(config);
+            var uid='VAFKpny35sqpiwNboekD';
+            var db = firebase.firestore();
+            var docRef = db.collection("patients").doc(uid);
+            
+    </body>
+</html>
